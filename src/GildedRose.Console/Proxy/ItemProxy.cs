@@ -1,4 +1,4 @@
-﻿namespace GildedRose.Console
+﻿namespace GildedRose.Console.Proxy
 {
   public class ItemProxy
   {
@@ -38,7 +38,5 @@
     {
       _item.SellIn--;
     }
-
-
   }
 }

@@ -30,7 +30,7 @@ namespace GildedRose.Tests
     [InlineData(11)]
     [InlineData(12)]
     [InlineData(13)]
-    public void IncreaseBackStagePassesQualityBy1_GivenSellInGt10Days(int initialSellIn)
+    public void IncreaseBackStagePassesQuality_By1_GivenSellInGt10Days(int initialSellIn)
     {
       _item.SellIn = initialSellIn;
       _service.UpdateQuality();
@@ -42,7 +42,7 @@ namespace GildedRose.Tests
     [InlineData(8)]
     [InlineData(9)]
     [InlineData(10)]
-    public void IncreaseBackStagePassesQualityBy2_GivenSellIn6To10Days(int initialSellIn)
+    public void IncreaseBackStagePassesQuality_By2_GivenSellIn6To10Days(int initialSellIn)
     {
       _item.SellIn = initialSellIn;
       _service.UpdateQuality();
@@ -55,7 +55,7 @@ namespace GildedRose.Tests
     [InlineData(3)]
     [InlineData(4)]
     [InlineData(5)]
-    public void IncreaseBackStagePassesQualityBy2_GivenSellIn1To5Days(int initialSellIn)
+    public void IncreaseBackStagePassesQuality_By2_GivenSellIn1To5Days(int initialSellIn)
     {
       _item.SellIn = initialSellIn;
       _service.UpdateQuality();
@@ -73,7 +73,7 @@ namespace GildedRose.Tests
     [InlineData(49, 5)]
     [InlineData(48, 5)]
     [InlineData(47, 5)]
-    public void DoesNotIncreaseQualityBeyond50NoMatterHowManyDaysRemain(int initialQuality, int initialSellIn)
+    public void DoesNotIncreaseQuality_Beyond50_NoMatterHowManyDaysRemain(int initialQuality, int initialSellIn)
     {
       _item.SellIn = initialSellIn;
       _item.Quality = initialQuality;
@@ -83,7 +83,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void ReduceBackstagePassesQualityToZeroGivenNonPositiveSellInDays()
+    public void ReduceBackstagePassesQuality_ToZero_GivenNonPositiveSellInDays()
     {
       _item.SellIn = 0;
       _service.UpdateQuality();

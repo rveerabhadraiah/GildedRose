@@ -41,7 +41,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void DoesNotDecreaseSellInDays()
+    public void DoesNotDecrease_SellInDays()
     {
       _service.UpdateQuality();
       Assert.Equal(InitialSellIn, _item.SellIn);

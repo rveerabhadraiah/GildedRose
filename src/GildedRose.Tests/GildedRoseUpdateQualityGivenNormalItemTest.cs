@@ -28,14 +28,14 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void ReduceNormalItemQualityBy1_GivenPositiveSellInDays()
+    public void ReduceNormalItemQuality_By1_GivenPositiveSellInDays()
     {
       _service.UpdateQuality();
       Assert.Equal(InitialQuality - 1, _item.Quality);
     }
 
     [Fact]
-    public void ReduceNormalItemQualityBy2_GivenNonPositiveSellInDays()
+    public void ReduceNormalItemQuality_By2_GivenNonPositiveSellInDays()
     {
       _item.SellIn = 0;
       _service.UpdateQuality();
@@ -43,7 +43,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void DoesNotReduceQualityBelowZero()
+    public void DoesNotReduceQuality_BelowZero()
     {
       _item.Quality = 0;
       _service.UpdateQuality();
@@ -55,7 +55,7 @@ namespace GildedRose.Tests
     [InlineData(2)]
     [InlineData(1)]
     [InlineData(0)]
-    public void DoesNotReduceQualityBelowZeroGivenNonPositiveSellIn(int initialQuality)
+    public void DoesNotReduceQuality_BelowZero_GivenNonPositiveSellIn(int initialQuality)
     {
       _item.SellIn = 0;
       _item.Quality = initialQuality;
@@ -66,7 +66,7 @@ namespace GildedRose.Tests
 
 
     [Fact]
-    public void ReduceNormalItemSellInDayBy1()
+    public void ReduceNormalItem_SellInDayBy1()
     {
       _service.UpdateQuality();
       Assert.Equal(InitialSellIn - 1, _item.SellIn);
@@ -74,7 +74,7 @@ namespace GildedRose.Tests
 
 
     [Fact]
-    public void DoesReduceSellInBelowZero()
+    public void DoesReduce_SellInDayBelowZero()
     {
       _item.SellIn = 0;
       _service.UpdateQuality();

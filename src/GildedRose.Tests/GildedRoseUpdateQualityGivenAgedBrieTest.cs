@@ -26,7 +26,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void IncreaseAgedBrieQualityBy1_PositiveSellInDays()
+    public void IncreaseAgedBrieQuality_By1_PositiveSellInDays()
     {
       _service.UpdateQuality();
       Assert.Equal(InitialQuality + 1, _item.Quality);
@@ -34,7 +34,7 @@ namespace GildedRose.Tests
 
     [Fact]
     // Once the sell by date has passed, Quality degrades twice as fast
-    public void IncreaseAgedBrieQualityBy2_NonPositiveSellInDays()
+    public void IncreaseAgedBrieQuality_By2_NonPositiveSellInDays()
     {
       _item.SellIn = 0;
       _service.UpdateQuality();
@@ -45,7 +45,7 @@ namespace GildedRose.Tests
     [InlineData(48)]
     [InlineData(49)]
     [InlineData(50)]
-    public void DoesNotIncreaseQualityAbove50GivenNonPositiveSellInDays(int initialQuality)
+    public void DoesNotIncreaseQuality_Above50_GivenNonPositiveSellInDays(int initialQuality)
     {
       _item.SellIn = 0;
       _item.Quality = initialQuality;
@@ -55,7 +55,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void DoesNotIncreaseQualityBeyond50()
+    public void DoesNotIncreaseQuality_Beyond50()
     {
       _item.Quality = 50;
       _service.UpdateQuality();
@@ -63,7 +63,7 @@ namespace GildedRose.Tests
     }
 
     [Fact]
-    public void DoesReduceSelfInBelowZero()
+    public void DoesReduce_SelfInDaysBelowZero()
     {
       _item.SellIn = 0;
       _service.UpdateQuality();

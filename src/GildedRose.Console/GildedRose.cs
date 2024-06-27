@@ -1,11 +1,26 @@
-﻿using System.Collections.Generic;
-using static GildedRose.Console.Constants.Item;
+﻿using GildedRose.Console.Proxy;
+using GildedRose.Console.Rules;
+using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
+
+  /// <summary>
+  /// Requirements: https://github.com/ardalis/kata-catalog/blob/main/katas/Gilded%20Rose.md 
+  /// Code:  https://github.com/NotMyself/GildedRose
+  /// Reference: https://app.pluralsight.com/library/courses/design-patterns-overview
+  ///  Checkout Demo: Practice with Patterns
+  /// Refactored using
+  ///  Proxy Pattern = control access to class,
+  ///  Rule Based Pattern = break complex logic into simple class each doing one thing,and RulesEngine With applies this rules 
+  ///  Builder Pattern = constructs rules engine
+  ///  Template Method Pattern = certain steps must happen in sequence in a given set of subclasses
+  ///                            and force each subclass to follow that same sequence
+  ///                            but customize how each step works based on that subtypes behaviour
+  /// </summary>
   public class GildedRose
   {
-    public readonly IList<Item> _items;
+    private readonly IList<Item> _items;
 
     public GildedRose(IList<Item> items)
     {
@@ -16,76 +31,24 @@ namespace GildedRose.Console
     {
       foreach (var item in _items)
       {
-        if (item.Name != AgedBrie && item.Name != BackstagePasses)
-        {
-          if (item.Quality > 0)
-          {
-            if (item.Name != Sulfuras)
-            {
-              item.Quality = item.Quality - 1;
-            }
-          }
-        }
-        else
-        {
-          if (item.Quality < 50)
-          {
-            item.Quality = item.Quality + 1;
-
-            if (item.Name == BackstagePasses)
-            {
-              if (item.SellIn < 11)
-              {
-                if (item.Quality < 50)
-                {
-                  item.Quality = item.Quality + 1;
-                }
-              }
-
-              if (item.SellIn < 6)
-              {
-                if (item.Quality < 50)
-                {
-                  item.Quality = item.Quality + 1;
-                }
-              }
-            }
-          }
-        }
-
-        if (item.Name != Sulfuras)
-        {
-          item.SellIn = item.SellIn - 1;
-        }
-
-        if (item.SellIn < 0)
-        {
-          if (item.Name != AgedBrie)
-          {
-            if (item.Name != BackstagePasses)
-            {
-              if (item.Quality > 0)
-              {
-                if (item.Name != Sulfuras)
-                {
-                  item.Quality = item.Quality - 1;
-                }
-              }
-            }
-            else
-            {
-              item.Quality = item.Quality - item.Quality;
-            }
-          }
-          else
-          {
-            if (item.Quality < 50)
-            {
-              item.Quality = item.Quality + 1;
-            }
-          }
-        }
+        UpdateQuality(NewItemProxy(item));
       }
+    }
+
+    private ItemProxy NewItemProxy(Item item)
+    {
+      return new ItemProxy(item);
+    }
+
+    private void UpdateQuality(ItemProxy item)
+    {
+      var engine = ItemQualityRuleEngine.GetBuilder()
+        .WithAgedBrieRule()
+        .WithBackStagePassesRule()
+        .WithConjuredItemRule()
+        .WithSulfurasRule()
+        .Build();
+      engine.ApplyRules(item);
     }
   }
 }
